@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"crypto/tls"
@@ -6,9 +6,21 @@ import (
 	"fmt"
 	"io"
 	"log"
+
+	"github.com/spf13/cobra"
 )
 
-func main() {
+// clientCmd represents the client command
+var clientCmd = &cobra.Command{
+	Use:   "client",
+	Short: "Run client using TLS client authentication",
+	Long:  `Run client using TLS client authentication`,
+	Run: func(cmd *cobra.Command, args []string) {
+		client()
+	},
+}
+
+func client() {
 	cert, err := tls.LoadX509KeyPair("certs/client.pem", "certs/client.key")
 	if err != nil {
 		log.Fatalf("server: loadkeys: %s", err)
@@ -37,4 +49,8 @@ func main() {
 	n, err = conn.Read(reply)
 	log.Printf("client: read %q (%d bytes)", string(reply[:n]), n)
 	log.Print("client: exiting")
+}
+
+func init() {
+	rootCmd.AddCommand(clientCmd)
 }
