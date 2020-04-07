@@ -2,12 +2,18 @@ This demonstrates how to make client side certificates with go
 
 First generate the certificates with
 
+```
 ./makecert.sh test@test.com
+```
 
 Run the server in one terminal
 
-go run server.go
+```
+go run main.go server
+```
 
-Run the client in the other
+and the client in the other
 
-go run client.go
+```
+go run main.go client
+```
